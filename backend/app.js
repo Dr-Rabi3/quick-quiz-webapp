@@ -52,25 +52,28 @@ app.post("/user", async (req, res, next) => {
     if (!email || !password) {
       return res.status(400).json({
         status: handleStatus.FAil,
-        data: "Both username and password are required.",
+        message: "Both username and password are required.",
       });
     }
     const user = await User.findOne({ email: email }, { _id: false });
     if (!user)
       return res.status(400).json({
         status: handleStatus.FAil,
-        data: "The Email or Password is wrong",
+        message: "The Email or Password is wrong",
       });
     if (!user.confirm)
       return res
         .status(400)
-        .json({ status: handleStatus.FAil, data: "The Email not confirmed" });
+        .json({
+          status: handleStatus.FAil,
+          message: "The Email not confirmed",
+        });
     const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
       return res.status(400).json({
         status: handleStatus.FAil,
-        data: "The Email or Password is wrong",
+        message: "The Email or Password is wrong",
       });
     }
     const token = generateToken({
@@ -82,7 +85,7 @@ app.post("/user", async (req, res, next) => {
   } catch (er) {
     res
       .status(404)
-      .json({ status: handleStatus.FAil, data: "Failed to fetch data" });
+      .json({ status: handleStatus.FAil, message: "Failed to fetch data" });
   }
 });
 
@@ -93,7 +96,7 @@ app.get("/user:uid", async (req, res) => {
     const user = await User.findOne({ id: +token.userId });
     res.status(200).json({ status: handleStatus.SUCCESS, data: user });
   } catch (err) {
-    res.status(401).json({ status: handleStatus.FAil, data: err });
+    res.status(401).json({ status: handleStatus.FAil, message: err.message });
   }
 });
 // get user name
@@ -105,7 +108,7 @@ app.get("/user:uid/exam", async (req, res) => {
       data: { first: user["first-name"], last: user["last-name"] },
     });
   } catch (err) {
-    res.status(401).json({ status: handleStatus.FAil, data: err });
+    res.status(401).json({ status: handleStatus.FAil, message: err.message });
   }
 });
 // get users
@@ -134,7 +137,7 @@ app.post("/create-account", async (req, res) => {
     await user.save();
     res.status(201).json({ status: handleStatus.SUCCESS, data: user });
   } catch (err) {
-    res.status(401).json({ status: handleStatus.FAil, data: err.message });
+    res.status(401).json({ status: handleStatus.FAil, message: err.message });
   }
 });
 // update confirm url frontend
@@ -149,7 +152,7 @@ app.get("/confirmation/:token", async (req, res) => {
     // return res.redirect("https://quickquiz-sbr1.onrender.com/login");
     return res.status(200).redirect("https://quickquiz-0f4n.onrender.com/login");
   } catch (e) {
-    res.status(401).json({ status: handleStatus.FAil, data: e.message });
+    res.status(401).json({ status: handleStatus.FAil, message: e.message });
   }
 });
 // get user exams
@@ -164,7 +167,7 @@ app.get("/users:uid/exams", async (req, res) => {
   } catch (err) {
     return res
       .status(404)
-      .send({ status: handleStatus.ERROR, data: err.message });
+      .send({ status: handleStatus.ERROR, message: err.message });
   }
 });
 // add user exam
@@ -191,7 +194,7 @@ app.post("/users:uid/add-exam", async (req, res) => {
   } catch (err) {
     return res
       .status(404)
-      .send({ status: handleStatus.ERROR, data: err.message });
+      .send({ status: handleStatus.ERROR, message: err.message });
   }
 });
 app.get("/user/exam:eid", async (req, res) => {
@@ -201,7 +204,7 @@ app.get("/user/exam:eid", async (req, res) => {
   } catch (err) {
     return res
       .status(404)
-      .send({ status: handleStatus.ERROR, data: err.message });
+      .send({ status: handleStatus.ERROR, message: err.message });
   }
 });
 // get token
@@ -221,7 +224,7 @@ app.get("/user/home/exam:eid/:token", async (req, res) => {
   } catch (err) {
     return res
       .status(404)
-      .send({ status: handleStatus.ERROR, data: err.message });
+      .send({ status: handleStatus.ERROR, message: err.message });
   }
 });
 // get user exam question
@@ -235,7 +238,7 @@ app.get("/users/exams:eid/questions", async (req, res) => {
   } catch (err) {
     return res
       .status(404)
-      .send({ status: handleStatus.ERROR, data: err.message });
+      .send({ status: handleStatus.ERROR, message: err.message });
   }
 });
 // add user exam question
@@ -266,7 +269,7 @@ app.post("/users:uid/exams:eid/add-questions", async (req, res) => {
   } catch (err) {
     return res
       .status(404)
-      .send({ status: handleStatus.ERROR, data: err.message });
+      .send({ status: handleStatus.ERROR, message: err.message });
   }
 });
 // create exam link
@@ -294,7 +297,7 @@ app.get("/user:uid/exam:eid/create-link", async (req, res) => {
   } catch (err) {
     return res
       .status(404)
-      .send({ status: handleStatus.ERROR, data: err.message });
+      .send({ status: handleStatus.ERROR, message: err.message });
   }
 });
 
@@ -311,7 +314,7 @@ app.get("/:token", async (req, res) => {
   } catch (err) {
     return res
       .status(404)
-      .send({ status: handleStatus.FAil, data: err.message });
+      .send({ status: handleStatus.FAil, message: err.message });
   }
 });
 
@@ -330,7 +333,7 @@ app.get("/exam/:token", async (req, res) => {
   } catch (err) {
     return res
       .status(404)
-      .json({ status: handleStatus.FAil, data: err.message });
+      .json({ status: handleStatus.FAil, message: err.message });
   }
 });
 // add responses from students
@@ -401,7 +404,9 @@ app.post("/exam/response", async (req, res) => {
     return res.status(201).json({ status: handleStatus.SUCCESS, data: "ok" });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ status: handleStatus.FAil, error: err.message });
+    return res
+      .status(500)
+      .json({ status: handleStatus.FAil, message: err.message });
   }
 });
 // get responses from students
@@ -416,7 +421,7 @@ app.get("/exam/response/:token", async (req, res) => {
       .status(200)
       .json({ status: handleStatus.SUCCESS, data: responses });
   } catch (err) {
-    return res.status(400).json({ status: handleStatus.FAil, data: err });
+    return res.status(400).json({ status: handleStatus.FAil, message: err.message });
   }
 });
 
@@ -443,7 +448,9 @@ app.get("/notification/:eid/:rm", async (req, res) => {
     return res.status(200).json({ status: handleStatus.SUCCESS, data: exam });
     
   } catch (err) {
-    return res.status(404).json({ status: handleStatus.ERROR, data: err.message });
+    return res
+      .status(404)
+      .json({ status: handleStatus.ERROR, message: err.message });
   }
 });
 
