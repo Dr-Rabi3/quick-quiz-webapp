@@ -12,13 +12,13 @@ const requestConfig2 = {};
 
 export default function EndExam({ allData }) {
   const { isLoading, sendRequest } = useHttp(
-    // "https://quickquiz-backend.onrender.com/exam/response",
-    "http://localhost:3000/exam/response",
+    "https://quickquizb.onrender.com/exam/response",
+    // "http://localhost:3000/exam/response",
     requestConfig
   );
   const {} = useHttp(
-    // `https://quickquiz-backend.onrender.com/notification/:${allData.examId}/:1`,
-    `http://localhost:3000/notification/:${allData.examId}/:1`,
+    `https://quickquizb.onrender.com/notification/:${allData.examId}/:1`,
+    // `http://localhost:3000/notification/:${allData.examId}/:1`,
     requestConfig2
   );
   useEffect(() => {

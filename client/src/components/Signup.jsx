@@ -26,8 +26,8 @@ export default function SignUp() {
   const navigate = useNavigate();
   const [inputField, setInputField] = useState(initField);
   const { data, error, isLoading, sendRequest } = useHttp(
-    // "https://quickquiz-backend.onrender.com/create-account",
-    "http://localhost:3000/create-account",
+    "https://quickquizb.onrender.com/create-account",
+    // "http://localhost:3000/create-account",
     requestConfig
   );
   const handleSubmit = async (event) => {

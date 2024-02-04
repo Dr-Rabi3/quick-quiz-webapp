@@ -13,8 +13,8 @@ export default function Home() {
   const params = useParams();
   const { currentProgress, showAddExam } = useContext(openModal);
   const { data, isLoading, sendRequest } = useHttp(
-    // `https://quickquiz-backend.onrender.com/users:${params.uid.slice(1)}/exams`,
-    `http://localhost:3000/users:${params.uid.slice(1)}/exams`,
+    `https://quickquizb.onrender.com/users:${params.uid.slice(1)}/exams`,
+    // `http://localhost:3000/users:${params.uid.slice(1)}/exams`,
     requestConfig
   );
   if (data && data.user) {

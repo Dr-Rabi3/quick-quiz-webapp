@@ -12,8 +12,8 @@ const requestConfig = {};
 export default function ExamPage() {
   const params = useParams();
   const { data } = useHttp(
-    // `https://quickquiz-backend.onrender.com/exam/${params.token}`,
-    `http://localhost:3000/exam/${params.token}`,
+    `https://quickquizb.onrender.com/exam/${params.token}`,
+    // `http://localhost:3000/exam/${params.token}`,
     requestConfig
   );
   

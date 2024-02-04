@@ -16,8 +16,8 @@ export async function confirmation(user) {
     const emailToken = jwt.sign({ user: _.pick(user, "id") }, process.env.EMAIL_SECRET, {
       expiresIn: "1d",
     });
-    const url = `http://localhost:3000/confirmation/${emailToken}`;
-    // const url = `https://quickquiz-backend.onrender.com/confirmation/${emailToken}`;
+    // const url = `http://localhost:3000/confirmation/${emailToken}`;
+    const url = `https://quickquizb.onrender.com/confirmation/${emailToken}`;
 
     // console.log(emailToken);
     const info = await transporter.sendMail({

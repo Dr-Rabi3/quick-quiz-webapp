@@ -20,8 +20,8 @@ export default function AddExam() {
   const [duration, setDuration] = useState();
   const [level, setLevel] = useState("");
   const { data, error, sendRequest, clearData } = useHttp(
-    `http://localhost:3000/users:${getUserId()}/add-exam`,
-    // `https://quickquiz-backend.onrender.com/users:${getUserId()}/add-exam`,
+    // `http://localhost:3000/users:${getUserId()}/add-exam`,
+    `https://quickquizb.onrender.com/users:${getUserId()}/add-exam`,
     requestConfigExam
   );
 

@@ -20,8 +20,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static("public"));
 const corsOptions = {
-  // origin: "https://quickquiz-sbr1.onrender.com", // frontend URI (ReactJS)
-  origin: "http://localhost:3001", // frontend URI (ReactJS)
+  origin: "https://quickquiz-0f4n.onrender.com", // frontend URI (ReactJS)
+  // origin: "http://localhost:3001", // frontend URI (ReactJS)
 };
 app.use(cors(corsOptions));
 
@@ -147,7 +147,7 @@ app.get("/confirmation/:token", async (req, res) => {
     user.confirm = true;
     user.save();
     // return res.redirect("https://quickquiz-sbr1.onrender.com/login");
-    return res.redirect("http://localhost:3001/login");
+    return res.status(200).redirect("https://quickquiz-0f4n.onrender.com/login");
   } catch (e) {
     res.status(401).json({ status: handleStatus.FAil, data: e.message });
   }
@@ -288,8 +288,8 @@ app.get("/user:uid/exam:eid/create-link", async (req, res) => {
     UT.save();
     res.status(200).json({
       status: handleStatus.SUCCESS,
-      data: { Link: `http://localhost:3000/:${url}` },
-      // data: { Link: `https://quickquiz-backend.onrender.com/:${url}` },
+      // data: { Link: `http://localhost:3000/:${url}` },
+      data: { Link: `https://quickquizb.onrender.com/:${url}` },
     });
   } catch (err) {
     return res
@@ -302,8 +302,8 @@ app.get("/:token", async (req, res) => {
   try {
     const url = await UrlToken.findOne({ url: req.params.token.slice(1) });
     if (url) return res.status(200).redirect(
-      // `https://quickquiz-sbr1.onrender.com/exam/:${url.token}`
-      `http://localhost:3001/exam/:${url.token}`
+      `https://quickquiz-0f4n.onrender.com/exam/:${url.token}`
+      // `http://localhost:3001/exam/:${url.token}`
     );
     res
       .status(404)
