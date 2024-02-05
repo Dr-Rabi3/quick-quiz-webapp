@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 app.use(express.static("public"));
 const corsOptions = {
   origin: "https://quickquiz-0f4n.onrender.com", // frontend URI (ReactJS)
-  // origin: "http://localhost:3001", // frontend URI (ReactJS)
+  // origin: "http://localhost:3000", // frontend URI (ReactJS)
 };
 app.use(cors(corsOptions));
 
