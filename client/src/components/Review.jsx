@@ -16,13 +16,13 @@ const requestConfig2 = {
 export default function Review() {
   const { questions, init } = useContext(QuestionContext);
   const { data } = useHttp(
-    // `https://quickquizb.onrender.com/users/exams:${getExamId()}/questions`,
-    `http://localhost:5000/users/exams:${getExamId()}/questions`,
+    `https://quickquizb.onrender.com/users/exams:${getExamId()}/questions`,
+    // `http://localhost:5000/users/exams:${getExamId()}/questions`,
     requestConfig
   );
   const { sendRequest } = useHttp(
-    // `https://quickquizb.onrender.com/users:${getUserId()}/exams:${getExamId()}/add-questions`,
-    `http://localhost:5000/users:${getUserId()}/exams:${getExamId()}/add-questions`,
+    `https://quickquizb.onrender.com/users:${getUserId()}/exams:${getExamId()}/add-questions`,
+    // `http://localhost:5000/users:${getUserId()}/exams:${getExamId()}/add-questions`,
     requestConfig2
   );
   const [saved, setSaved] = useState();

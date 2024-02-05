@@ -7,13 +7,13 @@ const requestConfig = {};
 
 export default function Registration({ userId, examId, onStart }) {
   const { data: ExamData } = useHttp(
-    // `https://quickquizb.onrender.com/user/exam:${examId}`,
-    `http://localhost:5000/user/exam:${examId}`,
+    `https://quickquizb.onrender.com/user/exam:${examId}`,
+    // `http://localhost:5000/user/exam:${examId}`,
     requestConfig
   );
   const { data: userData } = useHttp(
-    // `https://quickquizb.onrender.com/user:${userId}/exam`,
-    `http://localhost:5000/user:${userId}/exam`,
+    `https://quickquizb.onrender.com/user:${userId}/exam`,
+    // `http://localhost:5000/user:${userId}/exam`,
     requestConfig
   );
   if (ExamData && userData) {

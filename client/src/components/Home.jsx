@@ -14,8 +14,8 @@ export default function Home() {
   const params = useParams();
   const { currentProgress, showAddExam } = useContext(openModal);
   const { data, isLoading, sendRequest } = useHttp(
-    // `https://quickquizb.onrender.com/users:${params.uid.slice(1)}/exams`,
-    `http://localhost:5000/users:${params.uid.slice(1)}/exams`,
+    `https://quickquizb.onrender.com/users:${params.uid.slice(1)}/exams`,
+    // `http://localhost:5000/users:${params.uid.slice(1)}/exams`,
     requestConfig
   );
   const [searchValues, setSearchValues] = useState('');

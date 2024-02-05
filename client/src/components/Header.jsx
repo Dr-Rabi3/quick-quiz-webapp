@@ -13,8 +13,8 @@ export default function Header() {
   const params = useParams();
   const navigate = useNavigate();
   const { data, isLoading } = useHttp(
-    `http://localhost:5000/users:${params.uid.slice(1)}/exams`,
-    // `https://quickquizb.onrender.com/users:${params.uid.slice(1)}/exams`,
+    // `http://localhost:5000/users:${params.uid.slice(1)}/exams`,
+    `https://quickquizb.onrender.com/users:${params.uid.slice(1)}/exams`,
     requestConfig
   );
   if (data && data.user) {

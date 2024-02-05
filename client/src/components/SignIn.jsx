@@ -15,8 +15,8 @@ const requestConfig = {
 export default function SignIn() {
   const navigate = useNavigate();
   const { data, error, isLoading, sendRequest } = useHttp(
-    // "https://quickquizb.onrender.com/user",
-    "http://localhost:5000/user",
+    "https://quickquizb.onrender.com/user",
+    // "http://localhost:5000/user",
     requestConfig
   );
   const [userEmail, setUserEmail] = useState("");
