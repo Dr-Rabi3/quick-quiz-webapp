@@ -69,8 +69,8 @@ export default function Edit() {
     setIsLoading(true);
     setURL(null);
     const { data } = await sendHttpRequest(
-      `https://quickquizb.onrender.com/user:${getUserId()}/exam:${getExamId()}/create-link`,
-      // `http://localhost:3000/user:${getUserId()}/exam:${getExamId()}/create-link`,
+      // `https://quickquizb.onrender.com/user:${getUserId()}/exam:${getExamId()}/create-link`,
+      `http://localhost:5000/user:${getUserId()}/exam:${getExamId()}/create-link`,
       requestConfig
     );
     console.log(data);

@@ -10,8 +10,8 @@ export default function ExamCart({ id, title, duration, level, hasNotify }) {
   const params = useParams();
   const navigate = useNavigate();
   const { data, sendRequest } = useHttp(
-    // `http://localhost:3000/user/home/exam:${id}/:${params.uid.slice(1)}`,
-    `https://quickquizb.onrender.com/user/home/exam:${id}/:${params.uid.slice(1)}`,
+    `http://localhost:5000/user/home/exam:${id}/:${params.uid.slice(1)}`,
+    // `https://quickquizb.onrender.com/user/home/exam:${id}/:${params.uid.slice(1)}`,
     requestConfig
   );
 

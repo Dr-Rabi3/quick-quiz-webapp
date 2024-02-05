@@ -2,7 +2,7 @@
 export default function StudentBox({ name, id, answers, questions }) {
   let degree = 0;
   for (let i = 0; i < answers.length; ++i) {
-    if (answers[i] && answers[i].id === questions[i].answer) {
+    if (answers[i] && answers[i].value === questions[i].answer) {
       degree += 1;
     }
   }
@@ -18,12 +18,13 @@ export default function StudentBox({ name, id, answers, questions }) {
         </p>
       </div>
       <div style={{paddingTop: "13px"}}>
-        { questions.map((question, idx) => {
+        {questions.map((question, idx) => {
             let isAnswered = "no answer";
             let correctAnswer = null;
             if (answers[idx]) {
               isAnswered = answers[idx].value;
-              if(answers[idx].id === question.answer) correctAnswer = "correct";
+              if (answers[idx].value === question.answer)
+                correctAnswer = "correct";
             }
             return (
               <div key={idx}>

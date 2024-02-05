@@ -8,18 +8,18 @@ const requestConfig = {};
 export default function Response() {
   const params = useParams();
   const { data: studentData } = useHttp(
-    `https://quickquizb.onrender.com/exam/response/${params.uid}`,
-    // `http://localhost:3000/exam/response/${params.uid}`,
+    // `https://quickquizb.onrender.com/exam/response/${params.uid}`,
+    `http://localhost:5000/exam/response/${params.uid}`,
     requestConfig
   );
   const { data: questions } = useHttp(
-    `https://quickquizb.onrender.com/users/exams:${getExamId()}/questions`,
-    // `http://localhost:3000/users/exams:${getExamId()}/questions`,
+    // `https://quickquizb.onrender.com/users/exams:${getExamId()}/questions`,
+    `http://localhost:5000/users/exams:${getExamId()}/questions`,
     requestConfig
   );
     const {} = useHttp(
-      `https://quickquizb.onrender.com/notification/:${getExamId()}/:0`,
-      // `http://localhost:3000/notification/:${getExamId()}/:0`,
+      // `https://quickquizb.onrender.com/notification/:${getExamId()}/:0`,
+      `http://localhost:5000/notification/:${getExamId()}/:0`,
       requestConfig
     );
   if (studentData && questions) {

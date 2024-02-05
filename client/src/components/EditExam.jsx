@@ -28,7 +28,6 @@ export default function EditExam() {
   const [cssStyle2, setCssStyle2] = useState(style);
   const [response, setResponse] = useState();
   const setActive = (num = 1) => {
-    console.log(num);
     if (num === 1) {
       setCssStyle2(style);
       setCssStyle1((prev) => ({

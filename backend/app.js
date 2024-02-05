@@ -20,8 +20,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static("public"));
 const corsOptions = {
-  origin: "https://quickquiz-0f4n.onrender.com", // frontend URI (ReactJS)
-  // origin: "http://localhost:3000", // frontend URI (ReactJS)
+  // origin: "https://quickquiz-0f4n.onrender.com", // frontend URI (ReactJS)
+  origin: "http://localhost:3000", // frontend URI (ReactJS)
 };
 app.use(cors(corsOptions));
 
@@ -149,8 +149,8 @@ app.get("/confirmation/:token", async (req, res) => {
     const user = await User.findOne({ id: id });
     user.confirm = true;
     user.save();
-    // return res.redirect("https://quickquiz-sbr1.onrender.com/login");
-    return res.status(200).redirect("https://quickquiz-0f4n.onrender.com/login");
+    return res.redirect("http://localhost:3000/login");
+    // return res.status(200).redirect("https://quickquiz-0f4n.onrender.com/login");
   } catch (e) {
     res.status(401).json({ status: handleStatus.FAil, message: e.message });
   }
@@ -184,6 +184,7 @@ app.post("/users:uid/add-exam", async (req, res) => {
     }
     const uid = parseInt(req.params.uid.slice(1), 10);
     const count = await Exam.countDocuments();
+    
     const exam = new Exam({
       ...req.body,
       id: `${uid}b${count + 1}`,
@@ -291,8 +292,8 @@ app.get("/user:uid/exam:eid/create-link", async (req, res) => {
     UT.save();
     res.status(200).json({
       status: handleStatus.SUCCESS,
-      // data: { Link: `http://localhost:3000/:${url}` },
-      data: { Link: `https://quickquizb.onrender.com/:${url}` },
+      data: { Link: `http://localhost:3000/:${url}` },
+      // data: { Link: `https://quickquizb.onrender.com/:${url}` },
     });
   } catch (err) {
     return res
@@ -305,8 +306,8 @@ app.get("/:token", async (req, res) => {
   try {
     const url = await UrlToken.findOne({ url: req.params.token.slice(1) });
     if (url) return res.status(200).redirect(
-      `https://quickquiz-0f4n.onrender.com/exam/:${url.token}`
-      // `http://localhost:3001/exam/:${url.token}`
+      // `https://quickquiz-0f4n.onrender.com/exam/:${url.token}`
+      `http://localhost:3000/exam/:${url.token}`
     );
     res
       .status(404)
@@ -439,7 +440,6 @@ app.get("/notification/:eid/:rm", async (req, res) => {
     }
 
     // Increase the number of notifications by one
-    console.log(+rm.slice(1));
     exam.notify = +rm.slice(1);
 
     // Save the updated exam
