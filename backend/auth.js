@@ -10,7 +10,7 @@ export async function confirmation(user) {
       port: 587,
       auth: {
         user: "quizquick31@gmail.com",
-        pass: "xsmtpsib-c67a012ce970e08b64ef71534f1b47dd538d369e5cff35da5870955d8e497622-pAvHXBgTQSREjy53",
+        pass: "UAJFMDn4mjQWwvcx",
       },
     });
     const emailToken = jwt.sign({ user: _.pick(user, "id") }, process.env.EMAIL_SECRET, {
