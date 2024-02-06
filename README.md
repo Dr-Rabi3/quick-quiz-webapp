@@ -18,7 +18,7 @@ Quick Quiz is a web application for creating and taking quizzes online. It allow
 - **Authentication**: JSON Web Tokens (JWT)
 - **Styling**: CSS, Bootstrap
 - **API Integration**: Axios
-- **Deployment**: Heroku (Backend), Netlify (Frontend)
+- **Deployment**: Render (Backend), Netlify (Frontend)
 
 ## Setup Instructions
 
