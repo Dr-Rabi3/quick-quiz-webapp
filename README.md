@@ -73,17 +73,9 @@ npm start
 
 ## Demo
 
-You can try out the Quick Quiz application live at [Demo Link]()
-
-## Contributing
-
-Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+You can try out the Quick Quiz application live at [Demo Link](https://quickquiz-0f4n.onrender.com)
 
 ## Contact
 
-For any inquiries or support, please email us at [email@example.com](mailto:email@example.com).
+For any inquiries or support, please email us at [email@example.com](mailto:abdalrazekmohmed6@gmail.com).
 
