@@ -87,6 +87,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For any inquiries or support, please email us at [email@example.com](mailto:email@example.com).
 
----
-
-Feel free to customize the README file according to your project's specific details and requirements.
