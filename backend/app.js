@@ -292,7 +292,7 @@ app.get("/user:uid/exam:eid/create-link", async (req, res) => {
     UT.save();
     res.status(200).json({
       status: handleStatus.SUCCESS,
-      // data: { Link: `http://localhost:3000/:${url}` },
+      // data: { Link: `http://localhost:5000/:${url}` },
       data: { Link: `https://quickquizb.onrender.com/:${url}` },
     });
   } catch (err) {

@@ -33,7 +33,10 @@ export default function Home() {
     if (searchValues.trim().length > 0) {
       setExams(prev => {
         return prev.filter(
-          (ex) => ex.title.toLowerCase() === searchValues.trim().toLowerCase()
+          (ex) => {
+            const title = ex.title.toLowerCase();
+            return title.includes(searchValues.trim().toLowerCase());
+          }
         );
       })
     }

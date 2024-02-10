@@ -1,50 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Time({ time , onEndExam}) {
-  const [clock, setClock] = useState({
-    h: Math.floor(time / 60),
-    m: Math.floor(time % 60),
-    s: 0,
+
+function Format(number) {
+  if (number < 10) return '0' + number;
+  return number;
+}
+
+const second = 1000;
+const minute = second * 60;
+const hour = minute * 60;
+
+export default function Time({ time, onEndExam }) {
+  const [Timer, setTimer] = useState({
+    hour: Format(Math.floor((+time) / 60)),
+    minute: Format(Math.floor(((+time) % 60) / minute)),
+    second: "00",
   });
-
-  setTimeout(() => {
-    const now = clock;
-    now.s -= 1;
-    if (now.s < 0) {
-      now.s = 59;
-      now.m -= 1;
-    }
-    if (now.m < 0) {
-      now.m = 59;
-      now.h -= 1;
-    }
-    if (now.h < 0) {
-      onEndExam();
-    }
-    setClock((prev) => ({
-      ...now,
-    }));
-  }, 900);
-
+  const countDownDate = new Date();
+  countDownDate.setMinutes(countDownDate.getMinutes() + (+time));
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date().getTime(); 
+      const distance = countDownDate.getTime() - now;
+      setTimer({
+        hour: Format(Math.floor(distance / hour)),
+        minute: Format(Math.floor((distance % hour) / minute)),
+        second: Format(Math.floor((distance % minute) / second)),
+      })
+      if (distance < 0) {
+        clearInterval(interval);
+        onEndExam();
+      }
+    }, 1000);
+  },[])
   return (
     <>
-      <div id="clock" className="light">
-        <div className="digits">
-          <div className="hour">
-            <span className="d1">{Math.floor(clock.h / 10)}</span>
-            <span className="d2">{Math.floor(clock.h % 10)}</span>
-          </div>
-          <div className="dots">:</div>
-          <div className="minute">
-            <span className="d1">{Math.floor(clock.m / 10)}</span>
-            <span className="d2">{Math.floor(clock.m % 10)}</span>
-          </div>
-          <div className="dots">:</div>
-          <div className="second">
-            <span className="d1">{Math.floor(clock.s / 10)}</span>
-            <span className="d2">{Math.floor(clock.s % 10)}</span>
-          </div>
-        </div>
+      <div className="countdown" id="countdown">
+        <ul>
+          <li>
+            <span id="hours">{Timer.hour}</span>
+            Hours
+          </li>
+          <li className="separator">:</li>
+          <li>
+            <span id="minutes">{Timer.minute}</span>
+            Minutes
+          </li>
+          <li className="separator">:</li>
+          <li>
+            <span id="seconds">{Timer.second}</span>
+            Seconds
+          </li>
+        </ul>
       </div>
     </>
   );

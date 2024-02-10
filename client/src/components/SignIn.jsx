@@ -34,7 +34,6 @@ export default function SignIn() {
   if (!error && data) {
     navigate(`/users/user/home/:${data}`);
   }
-
   if (!error && isLoading)
     return <Loading />;
 

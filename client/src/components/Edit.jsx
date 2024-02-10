@@ -1,7 +1,5 @@
 import Textarea from "../UI/Textarea.jsx";
 import Button from "../UI/Button.jsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
 import ChoicesContext from "../store/ChoicesList.jsx";
 import { useContext, useState } from "react";
 import ChooseBox from "../UI/ChooseBox.jsx";
@@ -88,7 +86,7 @@ export default function Edit() {
 
   const fontSize = "20px";
   return (
-    <form onSubmit={onSend} className="editForm">
+    <form onSubmit={onSend} className="editForm" style={{position: "sticky",top: "20%"}}>
       <h1>Add Question</h1>
       <div className="fields">
         {/* <div className="image-input">
