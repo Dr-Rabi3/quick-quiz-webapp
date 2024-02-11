@@ -3,15 +3,25 @@ import { useNavigate, useParams } from "react-router-dom";
 import { setExamId } from "../util/getLocalStorage";
 import useHttp from "../Hocks/ustHttp";
 import Loading from "../UI/Loading";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const requestConfig = {};
 
-export default function ExamCart({ id, title, duration, level, hasNotify }) {
+
+export default function ExamCart({
+  id,
+  title,
+  duration,
+  level,
+  hasNotify,
+  onRemove,
+}) {
   const params = useParams();
   const navigate = useNavigate();
   const { data, sendRequest } = useHttp(
-    // `http://localhost:5000/user/home/exam:${id}/:${params.uid.slice(1)}`,
-    `https://quickquizb.onrender.com/user/home/exam:${id}/:${params.uid.slice(1)}`,
+    `http://localhost:5000/user/home/exam:${id}/:${params.uid.slice(1)}`,
+    // `https://quickquizb.onrender.com/user/home/exam:${id}/:${params.uid.slice(1)}`,
     requestConfig
   );
 
@@ -22,24 +32,32 @@ export default function ExamCart({ id, title, duration, level, hasNotify }) {
       navigate(`/users/user/home/:${data.nwToken}/edit-exam`);
     };
     return (
-      <div onClick={onGoToExam} className="exam">
-        {hasNotify > 0 && <span
-          style={{  
-            width: "12px",
-            display: "inline-block",
-            height: "12px",
-            backgroundColor: "red",
-            position: "absolute",
-            right: "3%",
-            top: "3%",
-            fontWeight: "800",
-            fontSize: "20px",
-            borderRadius:"50%",
-          }}
-        ></span>}
+      <div className="exam">
+        {hasNotify > 0 && (
+          <span
+            style={{
+              width: "12px",
+              display: "inline-block",
+              height: "12px",
+              backgroundColor: "red",
+              position: "absolute",
+              right: "3%",
+              top: "3%",
+              fontWeight: "800",
+              fontSize: "20px",
+              borderRadius: "50%",
+            }}
+          ></span>
+        )}
         <img src={img} alt="" />
         <div className="article">
-          <h2>Title: {title}</h2>
+          <FontAwesomeIcon
+            icon={faTrash}
+            size="2s"
+            style={{ cursor: "pointer", float: "right" }}
+            onClick={() => onRemove(id)}
+          />
+          <h2 onClick={onGoToExam}>Title: {title}</h2>
           <h2>Duration: {duration} minutes</h2>
           <div className="control-row">
             <h2>Level: {level}</h2>

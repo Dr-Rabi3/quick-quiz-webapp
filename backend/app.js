@@ -208,6 +208,25 @@ app.get("/user/exam:eid", async (req, res) => {
       .send({ status: handleStatus.ERROR, message: err.message });
   }
 });
+// remove exam 
+app.get("/remove-exam/:eid", async (req, res) => {
+  try {
+    const exam = await Exam.deleteOne({ id: req.params.eid });
+    const questions = await Question.deleteMany({ examId: req.params.eid });
+    const responses = await ExamSubmission.deleteMany({ examId: req.params.eid });
+    res
+      .status(200)
+      .json({
+        status: handleStatus.SUCCESS,
+        data: [exam, questions, responses],
+      });
+  } catch (err) { 
+    return res
+      .status(404)
+      .send({ status: handleStatus.ERROR, message: err.message });
+  }
+});
+
 // get token
 app.get("/user/home/exam:eid/:token", async (req, res) => {
   try {
@@ -337,36 +356,7 @@ app.get("/exam/:token", async (req, res) => {
       .json({ status: handleStatus.FAil, message: err.message });
   }
 });
-// add responses from students
-// app.post("/exam/response", async (req, res) => {
-//   try {
-//     const isExist = await ExamSubmission.find({
-//       'student.id': req.body.student.id,
-//       examId: req.body.examId,
-//     });
-//     if (isExist.length > 0) {
-//       console.log("ExamSubmission");
-//       await ExamSubmission.deleteMany({
-//         'student.id': req.body.student.id,
-//         examId: req.body.examId,
-//       });
-//     }
-//     const response = new ExamSubmission({
-//       ...req.body,
-//       id: Math.floor(Math.random() * 1000000),
-//     });
-//     // console.log(response);
-//     await response.save();
-//     return res
-//       .status(201)
-//       .json({ status: handleStatus.SUCCESS, data: "ok" });
-//   } catch (err) {
-//     console.log(err);
-//     return res
-//       .status(404)
-//       .json({ status: handleStatus.FAil, data: err.message });
-//   }
-// });
+
 
 app.post("/exam/response", async (req, res) => {
   try {

@@ -404,7 +404,7 @@ nav div {
   /* background-color: var(--second-color); */
   overflow: hidden;
   box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
+  /* cursor: pointer; */
   max-width: 25rem;
   position: relative;
 }
@@ -414,6 +414,9 @@ nav div {
   padding-top: 0;
 }
 
+.container .article h2 {
+  cursor: pointer;
+}
 .container .exam img {
   width: 100%;
   height: 200px;
@@ -563,15 +566,15 @@ nav div {
   15% {
     transform: translateX(0);
   }
-  
+
   45% {
     transform: translateX(calc(var(--loader-width) - var(--loader-dot-size)));
   }
-  
+
   65% {
     transform: translateX(calc(var(--loader-width) - var(--loader-dot-size)));
   }
-  
+
   95% {
     transform: translateX(0);
   }
@@ -581,20 +584,19 @@ nav div {
   0% {
     content: "Loading";
   }
-  
+
   25% {
     content: "Loading.";
   }
-  
+
   50% {
     content: "Loading..";
   }
-  
+
   75% {
     content: "Loading...";
   }
 }
-
 
 /* editing exam */
 
@@ -752,7 +754,9 @@ nav div {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  overflow-wrap: anywhere;
 }
+
 .answer {
   font-size: 12px;
   text-transform: lowercase;
@@ -861,12 +865,11 @@ nav div {
 }
 /* Time */
 
-
-.countdown ul{
+.countdown ul {
   display: flex;
   justify-content: center;
 }
-.countdown ul li{
+.countdown ul li {
   list-style: none;
   font-size: 0.6rem;
   text-transform: uppercase;
@@ -874,12 +877,12 @@ nav div {
   color: #fff;
   /* letter-spacing: 5px; */
 }
-.countdown ul li span{
+.countdown ul li span {
   display: block;
   font-size: 2rem;
   color: #f5ff00;
 }
-.countdown ul li.separator{
+.countdown ul li.separator {
   margin: 0 10px;
   font-size: 2rem;
   line-height: 1;
@@ -994,7 +997,7 @@ nav div {
   position: relative;
   transition: 2s;
   background-color: var(--second-color);
-  padding: 10px 20px ;
+  padding: 10px 20px;
 }
 .studentBox > div:first-child {
   display: flex;
