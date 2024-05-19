@@ -62,12 +62,10 @@ app.post("/user", async (req, res, next) => {
         message: "The Email or Password is wrong",
       });
     if (!user.confirm)
-      return res
-        .status(400)
-        .json({
-          status: handleStatus.FAil,
-          message: "The Email not confirmed",
-        });
+      return res.status(400).json({
+        status: handleStatus.FAil,
+        message: "The Email not confirmed",
+      });
     const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
@@ -133,8 +131,13 @@ app.post("/create-account", async (req, res) => {
       id: allUsers + 1,
       confirm: false,
     });
-    await confirmation(user);
     await user.save();
+    const ok = await confirmation(user);
+    if (ok.status === handleStatus.FAil)
+      return res.status(401).json({
+        status: handleStatus.FAil,
+        message: "Can't send confirmation, please try again later.",
+      });
     res.status(201).json({ status: handleStatus.SUCCESS, data: user });
   } catch (err) {
     res.status(401).json({ status: handleStatus.FAil, message: err.message });
@@ -150,7 +153,9 @@ app.get("/confirmation/:token", async (req, res) => {
     user.confirm = true;
     user.save();
     // return res.redirect("http://localhost:3000/login");
-    return res.status(200).redirect("https://quickquiz-0f4n.onrender.com/login");
+    return res
+      .status(200)
+      .redirect("https://quickquiz-0f4n.onrender.com/login");
   } catch (e) {
     res.status(401).json({ status: handleStatus.FAil, message: e.message });
   }
@@ -184,7 +189,7 @@ app.post("/users:uid/add-exam", async (req, res) => {
     }
     const uid = parseInt(req.params.uid.slice(1), 10);
     const count = await Exam.countDocuments();
-    
+
     const exam = new Exam({
       ...req.body,
       id: `${uid}b${count + 1}`,
@@ -208,19 +213,19 @@ app.get("/user/exam:eid", async (req, res) => {
       .send({ status: handleStatus.ERROR, message: err.message });
   }
 });
-// remove exam 
+// remove exam
 app.get("/remove-exam/:eid", async (req, res) => {
   try {
     const exam = await Exam.deleteOne({ id: req.params.eid });
     const questions = await Question.deleteMany({ examId: req.params.eid });
-    const responses = await ExamSubmission.deleteMany({ examId: req.params.eid });
-    res
-      .status(200)
-      .json({
-        status: handleStatus.SUCCESS,
-        data: [exam, questions, responses],
-      });
-  } catch (err) { 
+    const responses = await ExamSubmission.deleteMany({
+      examId: req.params.eid,
+    });
+    res.status(200).json({
+      status: handleStatus.SUCCESS,
+      data: [exam, questions, responses],
+    });
+  } catch (err) {
     return res
       .status(404)
       .send({ status: handleStatus.ERROR, message: err.message });
@@ -240,7 +245,7 @@ app.get("/user/home/exam:eid/:token", async (req, res) => {
     const count = await ExamSubmission.countDocuments({
       examId: req.params.eid.slice(1),
     });
-    res.json({ status: handleStatus.SUCCESS, data: {count, nwToken} });
+    res.json({ status: handleStatus.SUCCESS, data: { count, nwToken } });
   } catch (err) {
     return res
       .status(404)
@@ -324,10 +329,11 @@ app.get("/user:uid/exam:eid/create-link", async (req, res) => {
 app.get("/:token", async (req, res) => {
   try {
     const url = await UrlToken.findOne({ url: req.params.token.slice(1) });
-    if (url) return res.status(200).redirect(
-      `https://quickquiz-0f4n.onrender.com/exam/:${url.token}`
-      // `http://localhost:3000/exam/:${url.token}`
-    );
+    if (url)
+      return res.status(200).redirect(
+        `https://quickquiz-0f4n.onrender.com/exam/:${url.token}`
+        // `http://localhost:3000/exam/:${url.token}`
+      );
     res
       .status(404)
       .json({ status: handleStatus.ERROR, data: "Filed to fetch!" });
@@ -357,21 +363,20 @@ app.get("/exam/:token", async (req, res) => {
   }
 });
 
-
 app.post("/exam/response", async (req, res) => {
   try {
     const { student, examId } = req.body;
 
     // Check if the submission already exists for the student and exam
     const existingSubmission = await ExamSubmission.findOne({
-      'student.id': student.id,
+      "student.id": student.id,
       examId: examId,
     });
 
     if (existingSubmission) {
       // If submission already exists, delete it
       await ExamSubmission.deleteMany({
-        'student.id': student.id,
+        "student.id": student.id,
         examId: examId,
       });
     }
@@ -384,13 +389,10 @@ app.post("/exam/response", async (req, res) => {
 
     // Remove duplicates based on student ID and exam ID
     await ExamSubmission.deleteMany({
-      'student.id': student.id,
+      "student.id": student.id,
       examId: examId,
-      _id: { $ne: response._id } // Exclude the newly inserted document
+      _id: { $ne: response._id }, // Exclude the newly inserted document
     });
-
-
-
 
     return res.status(201).json({ status: handleStatus.SUCCESS, data: "ok" });
   } catch (err) {
@@ -412,7 +414,9 @@ app.get("/exam/response/:token", async (req, res) => {
       .status(200)
       .json({ status: handleStatus.SUCCESS, data: responses });
   } catch (err) {
-    return res.status(400).json({ status: handleStatus.FAil, message: err.message });
+    return res
+      .status(400)
+      .json({ status: handleStatus.FAil, message: err.message });
   }
 });
 
@@ -422,7 +426,7 @@ app.get("/notification/:eid/:rm", async (req, res) => {
     const { eid, rm } = req.params; // Assuming examId is stored in the token
 
     // Retrieve the exam from the database using examId
-    const exam = await Exam.findOne({id: eid.slice(1)});
+    const exam = await Exam.findOne({ id: eid.slice(1) });
     if (!exam) {
       return res
         .status(404)
@@ -436,7 +440,6 @@ app.get("/notification/:eid/:rm", async (req, res) => {
     await exam.save();
     // Return the updated exam data
     return res.status(200).json({ status: handleStatus.SUCCESS, data: exam });
-    
   } catch (err) {
     return res
       .status(404)
